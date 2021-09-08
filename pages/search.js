@@ -1,17 +1,20 @@
+import { useRouter } from "next/dist/client/router";
 import Head from "next/head";
 import Header from "../components/Header";
+import SearchResults from "../components/SearchResults";
 import { API_KEY, CONTEXT_KEY } from "../keys";
 import Response from "../Response";
 
 function Search({ results }) {
-  console.log("results", results);
+  const router = useRouter();
   return (
     <div>
       <Head>
-        <title>Search Results</title>
+        <title>{router.query.term} - Google Search</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
+      <SearchResults results={results} />
     </div>
   );
 }
@@ -19,7 +22,7 @@ function Search({ results }) {
 export default Search;
 
 export async function getServerSideProps(context) {
-  const useDummyDate = false;
+  const useDummyData = true;
   const startIndex = context.query.start || "0";
 
   const data = useDummyData
